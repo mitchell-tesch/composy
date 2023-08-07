@@ -23,6 +23,7 @@ class eUtilisationFactor(StrEnum):
     WEB_OPEN = "WebOpening"
     NATURAL_FREQ = "NaturalFrequency"
 
+
 class eResultStations(StrEnum):
     '''Current position/distance from left end of the member'''
     SECTION_DIST = "CRITI_SECT_DIST"
@@ -36,7 +37,7 @@ class eResultProperties(StrEnum):
     '''Effective slab width on right side'''
     EFF_SLAB_WIDTH_RHS = "SLAB_WIDTH_R_EFFECT"
 
-    # '''Welding thickness at top'''
+    '''Welding thickness at top'''
     # "GIRDER_WELD_THICK_T"
     # '''Welding thickness at bottom'''
     # "GIRDER_WELD_THICK_B"
@@ -150,7 +151,6 @@ class eResultActions(StrEnum):
 
 
 class eResultCapacity(StrEnum):
-    
     '''Hogging moment capacity in Construction stage'''
     CAPACITY_CONS_HOG_MOMENT = "CAPA_MOM_ULTI_CONS_HOG"
     '''Assumed plastic Hogging moment capacity in Construction stage'''
@@ -339,7 +339,7 @@ class eResultNeutralAxis(StrEnum):
     # '''Actual shear capacity from right end'''
     # "STUD_CAPACITY_RIGHT"
 
-RESULT_OPTIONS = eResultStations | \
+RESULT_TYPES = eResultStations | \
                  eResultProperties | \
                  eResultActions | \
                  eResultCapacity | \

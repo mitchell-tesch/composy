@@ -1,20 +1,14 @@
 from context import composy
-
 from composy.compos import *
-from composy.result_enums import *
 
+compos_app = ComposApp()
 
-from pathlib import Path
+compos_app.open(r"D:\source\repos\composy\test_file\Compos.cob")
 
-ComposFile = Compos()
+compos_app.members[0].analyse_member()
 
-ComposFile.open(r"D:\source\repos\composy\test_file\Compos.cob")
+utilisation_factors = compos_app.members[0].get_utilisation_factors()
 
-ComposFile.members[0].analyse_member()
+result = compos_app.members[0].get_station_results(compos_app.eResultActions.FINAL_LIVE_MOMENT)
 
-result = ComposFile.members[0].get_station_results(eResultActions.FINAL_LIVE_MOMENT)
-
-min_result = ComposFile.members[0].get_min_result(eResultActions.FINAL_LIVE_MOMENT)
-
-print(ComposFile._member_names)
-
+min_result = compos_app.members[0].get_min_result(compos_app.eResultActions.FINAL_LIVE_MOMENT)

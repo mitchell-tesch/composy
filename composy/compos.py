@@ -1,6 +1,6 @@
 # Comosy - Compos API python wrapper
 # Compos Automation object
-__all__ = ['Compos']
+__all__ = ['ComposApp']
 
 from pathlib import Path
 
@@ -8,10 +8,18 @@ from pathlib import Path
 from composy.compos_api import *
 from composy.error_handle import *
 from composy.member import *
+from composy.result_enums import *
 
 
-
-class Compos():
+class ComposApp():
+    """Compos 8.6 COM Automation Interface"""
+    eUtilisationFactor = eUtilisationFactor
+    eResultStations = eResultStations
+    eResultProperties = eResultProperties
+    eResultActions = eResultActions
+    eResultCapacity = eResultCapacity
+    eResultNeutralAxis = eResultNeutralAxis
+    
     def __init__(self):
         self._compos_api = compos.Automation()
         self._file_open : bool = False
@@ -101,7 +109,7 @@ class Compos():
         iErr : int = self._compos_api.Close()
         if iErr != 0:
             raise ComposError(iErr, "No Compos file open.")
-        
+
     def refresh_members(self) -> None:
         """Reload all members within open Compos file.
 
@@ -113,6 +121,14 @@ class Compos():
             self._get_members()
         else:
             raise ComposyError(f"No Compos file open.")
+
+    def analyse_all_members(self) -> None:
+        for member in self._members:
+            member.analyse_member()
+
+    def design_all_members(self) -> None:
+        for member in self._members:
+            member.design_member()
 
 
     def _get_num_members(self) -> int:
@@ -130,11 +146,3 @@ class Compos():
         for member_index in range(0, self._num_members):
             self._members.append(Member(self._compos_api, member_index))
         return self._members
-
-    def analyse_all_members(self) -> None:
-        for member in self._members:
-            member.analyse_member()
-
-    def design_all_members(self) -> None:
-        for member in self._members:
-            member.design_member()

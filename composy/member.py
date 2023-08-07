@@ -10,6 +10,8 @@ from composy.result_dataclasses import *
 
 
 class Member():
+    """Compos 8.6 Member"""
+    
     def __init__(self, compos_api : compos.Automation = None, index : int = None):
         # existing member will have an index
         self.compos_api : compos.Automation = compos_api
@@ -22,7 +24,7 @@ class Member():
         self._code_status : eCodeStatus = eCodeStatus(4)
         self._num_stations : int = int()
         self._stations : [float] = []
-    
+
     def __repr__(self):
         return(f"ComposMember({self.index}: {self.name})")
 
@@ -96,7 +98,33 @@ class Member():
             self._get_number_stations()
             self._get_station_positions()
 
-    def get_station_results(self, result_type : RESULT_OPTIONS):
+    def get_utilisation_factors(self) -> UtilisationFactors:
+        """Retrieves member utilisation factors.
+
+        :raises ComposyError: Member has no results available.
+        :return: Member utilisation factors.
+        :rtype: UtilisationFactors
+        """
+        if not self._results_available:
+            raise ComposyError("Member has no results available.")
+        utilisation_factors = []
+        for factor in [eUtilisationFactor.CONST_MOMENT, eUtilisationFactor.CONST_SHEAR,
+                       eUtilisationFactor.CONST_BUCK, eUtilisationFactor.CONST_DEFL,
+                       eUtilisationFactor.FINAL_MOMENT, eUtilisationFactor.FINAL_SHEAR,
+                       eUtilisationFactor.FINAL_DEFL, eUtilisationFactor.TRANS_SHEAR,
+                       eUtilisationFactor.WEB_OPEN, eUtilisationFactor.NATURAL_FREQ]:
+            utilisation_factors.append(self.compos_api.UtilisationFactor(self.name, str(factor)))
+        return UtilisationFactors(*utilisation_factors)
+
+    def get_station_results(self, result_type : RESULT_TYPES) -> StationResults:
+        """Retrieves result value for all member stations.
+
+        :param result_type: result type StrEnum.
+        :type result_type: RESULT_TYPES
+        :raises ComposyError: Member has no results available.
+        :return: Results for all member stations.
+        :rtype: StationResults
+        """
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         station_results = []
@@ -104,20 +132,46 @@ class Member():
             station_results.append(self.compos_api.Result(self.name, str(result_type), station_index))
         return StationResults(result_type, station_results)
 
-    def get_station_result(self, result_type : RESULT_OPTIONS, station_index):
+    def get_station_result(self, result_type : RESULT_TYPES, station_index : int) -> StationResult:
+        """Retrieves result value at specified member station.
+
+        :param result_type: result type StrEnum.
+        :type result_type: RESULT_TYPES
+        :param station_index: index of desired station.
+        :type station_index: int
+        :raises ComposyError: Member has no results available.
+        :return: Result for requested member station.
+        :rtype: StationResult
+        """
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         station_result = self.compos_api.Result(self.name, str(result_type), station_index)
         return StationResult(result_type, station_index, station_result)
 
-    def get_max_result(self, result_type : RESULT_OPTIONS):
+    def get_max_result(self, result_type : RESULT_TYPES) -> MaxResult:
+        """Retrieves result maximum value and corresponding station.
+
+        :param result_type: result type StrEnum.
+        :type result_type: RESULT_TYPES
+        :raises ComposyError: Member has no results available.
+        :return: Maximum result and corresponding station.
+        :rtype: MaxResult
+        """
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         station_index = int()
         max_result, station_index = self.compos_api.MaxResult(self.name, str(result_type), station_index)
         return MaxResult(result_type, station_index, max_result)
 
-    def get_min_result(self, result_type : RESULT_OPTIONS):
+    def get_min_result(self, result_type : RESULT_TYPES) -> MinResult:
+        """Retrieves result minimum value and corresponding station.
+
+        :param result_type: result type StrEnum.
+        :type result_type: RESULT_TYPES
+        :raises ComposyError: Member has no results available.
+        :return: Minimum result and corresponding station.
+        :rtype: MinResult
+        """
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         station_index = int()
@@ -158,12 +212,3 @@ class Member():
             return
         for station_index in range(0, self.num_stations):
             self._stations.append(self.compos_api.Result(self.name, str(eResultStations.SECTION_DIST), station_index))
-
-
-
-@dataclass
-class StationResults:
-    result_type: RESULT_OPTIONS
-    result: [float]
-
-
