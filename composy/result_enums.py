@@ -1,6 +1,7 @@
-# Comosy - Compos API python wrapper
-# Results option enumerations
-
+"""
+Composy - Compos API python wrapper
+Module providing results option enumerations
+"""
 from enum import IntEnum, StrEnum
 
 
@@ -32,82 +33,67 @@ class eResultStations(StrEnum):
 
 
 class eResultProperties(StrEnum):
+    '''Welding thickness at top'''
+    WELD_SIZE_TOP = "GIRDER_WELD_THICK_T"
+    '''Welding thickness at bottom'''
+    WELD_SIZE_BTM = "GIRDER_WELD_THICK_B"
+
+    '''Flange class in Construction stage'''
+    CONST_FLANGE_CLASS = "CLAS_CONS_FLAN_CLASS"
+    '''web class in Construction stage'''
+    CONST_WEB_CLASS = "CLAS_CONS_WEB_CLASS"
+    '''Section class in Construction stage'''
+    CONST_SECTION_CLASS = "CLAS_CONS_SECTION"
+
+    '''Area of steel beam'''
+    STEEL_A = "AREA_STEEL_BEAM"
+    '''Moment of Inertia of steel beam'''
+    STEEL_I = "I_STEEL_BEAM"
+    '''Neutral axis depth of steel beam'''
+    STEEL_NA_DEPTH = "X_STEEL_BEAM"
+
     '''Effective slab width on left side'''
     EFF_SLAB_WIDTH_LHS = "SLAB_WIDTH_L_EFFECT"
     '''Effective slab width on right side'''
     EFF_SLAB_WIDTH_RHS = "SLAB_WIDTH_R_EFFECT"
 
-    '''Welding thickness at top'''
-    # "GIRDER_WELD_THICK_T"
-    # '''Welding thickness at bottom'''
-    # "GIRDER_WELD_THICK_B"
-    
-    # '''moment of Inertia of steel beam'''
-    # "I_STEEL_BEAM"
-    
-    # '''Neutral axis depth of steel beam'''
-    # 'X_STEEL_BEAM'
-    
-    # '''Area of steel beam'''
-    # "AREA_STEEL_BEAM"
-    
-    # '''moment of Inertia of beam for long term loading'''
-    # "I_LONG_TERM"
-    
-    # '''Neutral axis depth of beam for long term loading'''
-    # "X_LONG_TERM"
-    
-    # '''Area of beam for long term loading'''
-    # "AREA_LONG_TERM"
-    
-    # '''moment of Inertia of beam for short term loading'''
-    # "I_SHORT_TERM"
-    
-    # '''Neutral axis depth of beam for short term loading'''
-    # 'X_SHORT_TERM'
+    '''Flange class in Final stage'''
+    FINAL_FLANGE_CLASS = "CLAS_FINA_FLAN_CLASS"
+    '''web class in Final stage'''
+    FINAL_WEB_CLASS = "CLAS_FINA_WEB_CLASS"
+    '''Section class in Final stage'''
+    FINAL_SECT_CLASS = "CLAS_FINA_SECTION"
 
-    # ''' Area of beam for short term loading'''
-    # "AREA_SHORT_TERM"
-    
-    # '''moment of Inertia of beam for shrinkage'''
-    # "I_SHRINK"
-    
-    # '''Neutral axis depth of beam for shrinkage'''
-    # "X_SHRINK"
-    
-    # '''Area of beam for shrinkage'''
-    # "AREA_SHRINK"
-    
-    # '''Effective moment of Inertia of beam'''
-    # "I_EFFECTIVE"
-    
-    # '''Neutral axis depth of beam under combined loading'''
-    # "X_EFFECTIVE"
-    
-    # '''Effective Area of beam'''
-    # "AREA_EFFECT"
-    
-    # '''Flange class in Construction stage'''
-    # "CLAS_CONS_FLAN_CLASS"
+    ''' Area of beam for short term loading'''
+    SHORT_TERM_A = "AREA_SHORT_TERM"
+    '''Moment of Inertia of beam for short term loading'''
+    SHORT_TERM_I = "I_SHORT_TERM"
+    '''Neutral axis depth of beam for short term loading'''
+    SHORT_TERM_NA_DEPTH = "X_SHORT_TERM"
 
-    # '''web class in Construction stage'''
-    # "CLAS_CONS_WEB_CLASS"
+    '''Area of beam for long term loading'''
+    LONG_TERM_A = "AREA_LONG_TERM"
+    '''Moment of Inertia of beam for long term loading'''
+    LONG_TERM_I = "I_LONG_TERM"
+    '''Neutral axis depth of beam for long term loading'''
+    LONG_TERM_NA_DEPTH = "X_LONG_TERM"
+
+    '''Area of beam for shrinkage'''
+    SHRINK_A = "AREA_SHRINK"
+    '''Moment of Inertia of beam for shrinkage'''
+    SHRINK_I = "I_SHRINK"
+    '''Neutral axis depth of beam for shrinkage'''
+    SHRINK_NA_DEPTH = "X_SHRINK"
     
-    # '''Section class in Construction stage'''
-    # "CLAS_CONS_SECTION"
-    
-    # '''Flange class in Final stage'''
-    # "CLAS_FINA_FLAN_CLASS"
-    
-    # '''web class in Final stage'''
-    # "CLAS_FINA_WEB_CLASS"
-    
-    # '''Section class in Final stage'''
-    # "CLAS_FINA_SECTION"
+    '''Effective Area of beam'''
+    EFFECTIVE_A = "AREA_EFFECT"
+    '''Effective moment of Inertia of beam'''
+    EFFECTIVE_I = "I_EFFECTIVE"
+    '''Neutral axis depth of beam under combined loading'''
+    EFFECTIVE_NA_DEPTH = "X_EFFECTIVE"
 
 
 class eResultActions(StrEnum):
-    
     '''Construction stage ultimate moment'''
     ULS_CONST_MOMENT = "ULTI_MOM_CONS"
     '''Construction stage ultimate shear'''
@@ -176,8 +162,8 @@ class eResultCapacity(StrEnum):
     '''Used shear capacity'''
     CAPACITY_SHEAR_USED ="CAPA_SHE_PV"
 
+
 class eResultNeutralAxis(StrEnum):
-    
     '''Neutral axis depth under Hogging moment in Construction stage'''
     NA_DEPTH_CONS_HOG = "NEUTRAL_X_ULTI_CONS_HOG"
     '''Neutral axis depth under Assumed plastic Hogging moment in Construction stage'''
@@ -197,150 +183,120 @@ class eResultNeutralAxis(StrEnum):
     NA_DEPTH_FINAL_100INT_SAG= "NEUTRAL_X_100_INTER_SAG"
 
 
-# class eResultDeflection(StrEnum):
-    # '''Deflection due to Construction dead loads'''
-    # "DEFL_CONS_DEAD_LOAD"
-    
-    # '''Deflection due to additional dead loads'''
-    # "DEFL_ADDI_DEAD_LOAD"
-    
-    # '''Deflection due to Final stage live loads'''
-    # "DEFL_FINA_LIVE_LOAD"
-    
-    # '''Deflection due to shrinkage of concrete'''
-    # "DEFL_SHRINK"
-    
-    # '''Deflection due to post Construction loads'''
-    # "DEFL_POST_CONS"
-    
-    # '''Total Deflection'''
-    # "DEFL_FINA_TOTAL"
+class eResultDeflection(StrEnum):
+    '''Deflection due to Construction dead loads'''
+    CONST_DEAD_DELTA = "DEFL_CONS_DEAD_LOAD"
+    '''Deflection due to additional dead loads'''
+    ADD_DEAD_DELTA = "DEFL_ADDI_DEAD_LOAD"
+    '''Deflection due to Final stage live loads'''
+    FINAL_LIVE_DELTA = "DEFL_FINA_LIVE_LOAD"
+    '''Deflection due to shrinkage of concrete'''
+    SHRINK_DELTA = "DEFL_SHRINK"
+    '''Deflection due to post Construction loads'''
+    POST_CONST_DELTA = "DEFL_POST_CONS"
+    '''Total Deflection'''
+    FINAL_TOTAL_DELTA = "DEFL_FINA_TOTAL"
 
 
-# class eResultStress(StrEnum):
-    # '''Maximum stress in steel beam bottom Flange due to Construction loads'''
-    # "STRESS_CONS_BEAM_BOT"
+class eResultStress(StrEnum):
+    '''Maximum stress in steel beam bottom Flange due to Construction loads'''
+    CONST_STEEL_BTM_FLANGE = "STRESS_CONS_BEAM_BOT"
+    '''Maximum stress in steel beam web due to Construction loads'''
+    CONST_STEEL_WEB = "STRESS_CONS_BEAM_WEB"
+    '''Maximum stress in steel beam top Flange due to Construction loads'''
+    CONST_STEEL_TOP_FLANGE = "STRESS_CONS_BEAM_TOP"
     
-    # '''Maximum stress in steel beam web due to Construction loads'''
-    # "STRESS_CONS_BEAM_WEB"
+    '''Maximum stress in steel beam bottom Flange due to additional dead loads'''
+    ADD_DEAD_STEEL_BTM_FLANGE = "STRESS_ADDI_BEAM_BOT"
+    '''Maximum stress in steel beam web due to additional dead loads'''
+    ADD_DEAD_STEEL_WEB = "STRESS_ADDI_BEAM_WEB"
+    '''Maximum stress in steel beam top Flange due to additional dead loads'''
+    ADD_DEAD_STEEL_TOP_FLANGE = "STRESS_ADDI_BEAM_TOP"
+    '''Maximum stress in concrete slab due to additional dead loads'''
+    ADD_DEAD_CONC_MAX = "STRESS_ADDI_CONC_STRESS"
     
-    # '''Maximum stress in steel beam top Flange due to Construction loads'''
-    # "STRESS_CONS_BEAM_TOP"
+    '''Maximum stress in steel beam bottom Flange due to Final stage live loads'''
+    FINAL_LIVE_STEEL_BTM_FLANGE = "STRESS_FINA_LIVE_BEAM_BOT"
+    '''Maximum stress in steel beam web due to Final stage live loads'''
+    FINAL_LIVE_STEEL_WEB = "STRESS_FINA_LIVE_BEAM_WEB"
+    '''Maximum stress in steel beam top Flange due to Final stage live loads'''
+    FINAL_LIVE_STEEL_TOP_FLANGE = "STRESS_FINA_LIVE_BEAM_TOP"
+    '''Maximum stress in concrete slab due to Final stage live loads'''
+    FINAL_LIVE_CONC_MAX = "STRESS_FINA_LIVE_CONC_STRESS"
     
-    # '''Maximum stress in steel beam bottom Flange due to additional dead loads'''
-    # "STRESS_ADDI_BEAM_BOT"
+    '''Maximum stress in steel beam bottom Flange due to shrinkage'''
+    SHRINK_STEEL_BTM_FLANGE = "STRESS_SHRINK_BEAM_BOT"
+    '''Maximum stress in steel beam web due to shrinkage'''
+    SHRINK_STEEL_WEB = "STRESS_SHRINK_BEAM_WEB"
+    '''Maximum stress in steel beam top Flange due to shrinkage'''
+    SHRINK_STEEL_TOP_FLANGE = "STRESS_SHRINK_BEAM_TOP"
+    '''Maximum stress in concrete slab due to shrinkage'''
+    SHRINK_CONC_MAX = "STRESS_SHRINK_CONC_STRESS"
     
-    # '''Maximum stress in steel beam web due to additional dead loads'''
-    # "STRESS_ADDI_BEAM_WEB"
-    
-    # '''Maximum stress in steel beam top Flange  due to additional dead loads'''
-    # "STRESS_ADDI_BEAM_TOP"
-    
-    # '''Maximum stress in concrete slab due to additional dead loads'''
-    # "STRESS_ADDI_CONC_STRESS"
-    
-    # '''Maximum strain in concrete slab due to additional dead loads'''
-    # "STRESS_ADDI_CONC_STRAIN"
-    
-    # '''Maximum stress in steel beam bottom Flange due to Final stage live dead loads'''
-    # "STRESS_FINA_LIVE_BEAM_BOT"
-    
-    # '''Maximum stress in steel beam web due to Final stage live dead loads'''
-    # "STRESS_FINA_LIVE_BEAM_WEB"
-    
-    # '''Maximum stress in steel beam top Flange  due to Final stage live dead loads'''
-    # "STRESS_FINA_LIVE_BEAM_TOP"
-    
-    # '''Maximum stress in concrete slab due to Final stage live loads'''
-    # "STRESS_FINA_LIVE_CONC_STRESS"
-    
-    # '''Maximum strain in concrete slab due to Final stage live loads'''
-    # "STRESS_FINA_LIVE_CONC_STRAIN"
-    
-    # '''Maximum stress in steel beam bottom Flange due to shrinkage'''
-    # "STRESS_SHRINK_BEAM_BOT"
-    
-    # '''Maximum stress in steel beam web due to shrinkage'''
-    # "STRESS_SHRINK_BEAM_WEB"
-    
-    # '''Maximum stress in steel beam top Flange due to shrinkage'''
-    # "STRESS_SHRINK_BEAM_TOP"
-    
-    # '''Maximum stress in concrete slab due to shrinkage'''
-    # "STRESS_SHRINK_CONC_STRESS"
-    
-    # '''Maximum strain in concrete slab due to shrinkage'''
-    # "STRESS_SHRINK_CONC_STRAIN"
-    
-    # '''Maximum stress in steel beam bottom Flange in Final stage'''
-    # "STRESS_FINA_TOTL_BEAM_BOT"
-    
-    # '''Maximum stress in steel beam web in Final stage'''
-    # "STRESS_FINA_TOTL_BEAM_WEB"
-    
-    # '''Maximum stress in steel beam top Flange in Final stage'''
-    # "STRESS_FINA_TOTL_BEAM_TOP"
-    
-    # '''Maximum stress in concrete slab in Final stage'''
-    # "STRESS_FINA_TOTL_CONC_STRESS"
-    
-    # '''Maximum strain in concrete slab in Final stage'''
-    # "STRESS_FINA_TOTL_CONC_STRAIN"
+    '''Maximum stress in steel beam bottom Flange in Final stage'''
+    FINAL_TOTAL_STEEL_BTM_FLANGE = "STRESS_FINA_TOTL_BEAM_BOT"
+    '''Maximum stress in steel beam web in Final stage'''
+    FINAL_TOTAL_STEEL_WEB = "STRESS_FINA_TOTL_BEAM_WEB"
+    '''Maximum stress in steel beam top Flange in Final stage'''
+    FINAL_TOTAL_STEEL_TOP_FLANGE = "STRESS_FINA_TOTL_BEAM_TOP"
+    '''Maximum stress in concrete slab in Final stage'''
+    FINAL_TOTAL_CONC_MAX = "STRESS_FINA_TOTL_CONC_STRESS"
 
 
-# class eResultVibration(StrEnum):
-    # '''Mode shape'''
-    # "MODAL_SHAPE"
-    
-    # '''moment of Inertia of beam for vibration'''
-    # "I_VIBRATION"
-    
-    # '''Neutral axis depth of beam for vibration'''
-    # "X_VIBRATION"
-    
-    # '''Area of beam for vibration'''
-    # "AREA_VIBRATION"
+class eResultStrain(StrEnum):
+    '''Maximum strain in concrete slab due to additional dead loads'''
+    ADD_DEAD_CONC_MAX = "STRESS_ADDI_CONC_STRAIN"
+    '''Maximum strain in concrete slab due to Final stage live loads'''
+    FINAL_LIVE_CONC_MAX = "STRESS_FINA_LIVE_CONC_STRAIN"
+    '''Maximum strain in concrete slab due to shrinkage'''
+    SHRINK_CONC_MAX = "STRESS_SHRINK_CONC_STRAIN"
+    '''Maximum strain in concrete slab in Final stage'''
+    FINAL_TOTAL_CONC_MAX = "STRESS_FINA_TOTL_CONC_STRAIN"
 
 
-# class eResultStuds(StrEnum):
-    # '''Actual stud capacity'''
-    # "STUD_CONCRTE_FORCE"
+class eResultVibration(StrEnum):
+    '''Mode shape'''
+    MODAL_SHAPE = "MODAL_SHAPE"
+    '''Area of beam for vibration'''
+    VIBRATION_A = "AREA_VIBRATION"
+    '''moment of Inertia of beam for vibration'''
+    VIBRATION_I = "I_VIBRATION"
+    '''Neutral axis depth of beam for vibration'''
+    VIBRATION_DEPTH_NA = "X_VIBRATION"
     
-    # '''Actual number of studs provided from left end'''
-    # "STUD_NUM_LEFT_PROV"
-    
-    # '''Actual number of studs provided from right end'''
-    # "STUD_NUM_RIGHT_PROV"
-    
-    # '''Used number of studs provided from left end'''
-    # "STUD_NUM_LEFT_USED"
-    
-    # '''Used number of studs provided from right end'''
-    # "STUD_NUM_RIGHT_USED"
-    
-    # '''Required stud capacity for 100% shear interaction'''
-    # "STUD_CONCRTE_FORCE_100"
-    
-    # '''Required stud capacity for given moment'''
-    # "STUD_CONCRTE_FORCE_REQ"
-    
-    # '''Required shear interaction for given moment'''
-    # "STUD_INTERACT_REQ"
-    
-    # '''One shear stud capacity'''
-    # "STUD_ONE_CAPACITY"
-    
-    # '''Actual shear interaction'''
-    # "STUD_PERCENT_INTERACTION"
-    
-    # '''Actual shear capacity from left end'''
-    # "STUD_CAPACITY_LEFT"
-    
-    # '''Actual shear capacity from right end'''
-    # "STUD_CAPACITY_RIGHT"
 
-RESULT_TYPES = eResultStations | \
-                 eResultProperties | \
-                 eResultActions | \
-                 eResultCapacity | \
-                 eResultNeutralAxis
+class eResultStuds(StrEnum):
+    '''Actual number of studs provided from left end'''
+    PROVIDED_STUDS_LEFT = "STUD_NUM_LEFT_PROV"
+    '''Actual number of studs provided from right end'''
+    PROVIDED_STUDS_RIGHT = "STUD_NUM_RIGHT_PROV"
+    
+    '''Used number of studs provided from left end'''
+    USED_STUDS_LEFT = "STUD_NUM_LEFT_USED"
+    '''Used number of studs provided from right end'''
+    USED_STUDS_RIGHT = "STUD_NUM_RIGHT_USED"
+    
+    '''Actual shear interaction'''
+    STUD_INT = "STUD_PERCENT_INTERACTION"
+    '''One shear stud capacity'''
+    SINGLE_STUD_CAPACITY = "STUD_ONE_CAPACITY"
+    '''Actual stud capacity'''
+    STUD_CAPACITY = "STUD_CONCRTE_FORCE"
+    '''Actual shear capacity from left end'''
+    STUD_CAPACITY_LEFT = "STUD_CAPACITY_LEFT"
+    '''Actual shear capacity from right end'''
+    STUD_CAPACITY_RIGHT = "STUD_CAPACITY_RIGHT"
+    
+    '''Required stud capacity for 100% shear interaction'''
+    REQ_STUD_CAPACITY_100INT = "STUD_CONCRTE_FORCE_100"
+    '''Required stud capacity for given moment'''
+    REQ_STUD_CAPACITY_MOMENT = "STUD_CONCRTE_FORCE_REQ"
+    '''Required shear interaction for given moment'''
+    REQ_INT_MOMENT = "STUD_INTERACT_REQ"
+
+
+# Type Alias for Results Enums
+RESULT_TYPES = eResultStations | eResultProperties | eResultActions | \
+                eResultCapacity | eResultNeutralAxis | eResultDeflection | \
+                eResultStress | eResultStrain | eResultVibration | \
+                eResultStuds

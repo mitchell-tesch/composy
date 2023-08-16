@@ -1,17 +1,19 @@
-# Comosy - Compos API python wrapper
-# Compos Member object
+"""
+Composy - Compos API python wrapper
+Module for the Compos Member object
+"""
 __all__ = ['Member']
 
 # import Composy components
-from composy.compos_api import *
-from composy.error_handle import *
-from composy.result_enums import *
-from composy.result_dataclasses import *
+from composy.compos_api import compos
+from composy.error_handle import ComposyError, ComposError
+import composy.result_enums as results_enums
+import composy.result_dataclasses as result
 
 
 class Member():
     """Compos 8.6 Member"""
-    
+
     def __init__(self, compos_api : compos.Automation = None, index : int = None):
         # existing member will have an index
         self.compos_api : compos.Automation = compos_api
@@ -21,12 +23,12 @@ class Member():
         self._analysis_run : bool = False
         self._design_run : bool = False
         self._results_available : bool = False
-        self._code_status : eCodeStatus = eCodeStatus(4)
+        self._code_status : results_enums.eCodeStatus = results_enums.eCodeStatus(4)
         self._num_stations : int = int()
         self._stations : [float] = []
 
     def __repr__(self):
-        return(f"ComposMember({self.index}: {self.name})")
+        return f"ComposMember({self.index}: {self.name})"
 
     @property
     def index(self):
@@ -47,19 +49,19 @@ class Member():
     @property
     def design_run(self):
         return self._design_run
-    
+
     @property
     def results_available(self):
         return self._results_available
-    
+
     @property
     def code_status(self):
         return self._code_status
-    
+
     @property
     def num_stations(self):
         return self._num_stations
-    
+
     @property
     def stations(self):
         return self._stations
@@ -75,9 +77,9 @@ class Member():
 
         :raises ComposError: Analysis of member {} failed.
         """
-        iErr : int = self.compos_api.Analyse(self.name)
-        if iErr != 0:
-            raise ComposError(iErr, f"Analysis of member {self.name} failed.")
+        ret : int = self.compos_api.Analyse(self.name)
+        if ret != 0:
+            raise ComposError(ret, f"Analysis of member {self.name} failed.")
         else:
             self._analysis_run = True
             self._get_code_status()
@@ -89,16 +91,16 @@ class Member():
 
         :raises ComposError: Design of member {} failed.
         """
-        iErr : int = self.compos_api.Design(self.name)
-        if iErr != 0:
-            raise ComposError(iErr, f"Design of member {self.name} failed.")
+        ret : int = self.compos_api.Design(self.name)
+        if ret != 0:
+            raise ComposError(ret, f"Design of member {self.name} failed.")
         else:
             self.design_run = True
             self._get_code_status()
             self._get_number_stations()
             self._get_station_positions()
 
-    def get_utilisation_factors(self) -> UtilisationFactors:
+    def get_utilisation_factors(self) -> result.UtilisationFactors:
         """Retrieves member utilisation factors.
 
         :raises ComposyError: Member has no results available.
@@ -108,15 +110,21 @@ class Member():
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         utilisation_factors = []
-        for factor in [eUtilisationFactor.CONST_MOMENT, eUtilisationFactor.CONST_SHEAR,
-                       eUtilisationFactor.CONST_BUCK, eUtilisationFactor.CONST_DEFL,
-                       eUtilisationFactor.FINAL_MOMENT, eUtilisationFactor.FINAL_SHEAR,
-                       eUtilisationFactor.FINAL_DEFL, eUtilisationFactor.TRANS_SHEAR,
-                       eUtilisationFactor.WEB_OPEN, eUtilisationFactor.NATURAL_FREQ]:
+        for factor in [results_enums.eUtilisationFactor.CONST_MOMENT,
+                       results_enums.eUtilisationFactor.CONST_SHEAR,
+                       results_enums.eUtilisationFactor.CONST_BUCK,
+                       results_enums.eUtilisationFactor.CONST_DEFL,
+                       results_enums.eUtilisationFactor.FINAL_MOMENT,
+                       results_enums.eUtilisationFactor.FINAL_SHEAR,
+                       results_enums.eUtilisationFactor.FINAL_DEFL,
+                       results_enums.eUtilisationFactor.TRANS_SHEAR,
+                       results_enums.eUtilisationFactor.WEB_OPEN,
+                       results_enums.eUtilisationFactor.NATURAL_FREQ]:
             utilisation_factors.append(self.compos_api.UtilisationFactor(self.name, str(factor)))
-        return UtilisationFactors(*utilisation_factors)
+        return result.UtilisationFactors(*utilisation_factors)
 
-    def get_station_results(self, result_type : RESULT_TYPES) -> StationResults:
+    def get_station_results(self,
+                            result_type : results_enums.RESULT_TYPES) -> result.StationResults:
         """Retrieves result value for all member stations.
 
         :param result_type: result type StrEnum.
@@ -129,10 +137,14 @@ class Member():
             raise ComposyError("Member has no results available.")
         station_results = []
         for station_index in range(0, self.num_stations):
-            station_results.append(self.compos_api.Result(self.name, str(result_type), station_index))
-        return StationResults(result_type, station_results)
+            station_results.append(self.compos_api.Result(self.name,
+                                                          str(result_type),
+                                                          station_index))
+        return result.StationResults(result_type, station_results)
 
-    def get_station_result(self, result_type : RESULT_TYPES, station_index : int) -> StationResult:
+    def get_station_result(self,
+                           result_type : results_enums.RESULT_TYPES,
+                           station_index : int) -> result.StationResult:
         """Retrieves result value at specified member station.
 
         :param result_type: result type StrEnum.
@@ -146,9 +158,9 @@ class Member():
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         station_result = self.compos_api.Result(self.name, str(result_type), station_index)
-        return StationResult(result_type, station_index, station_result)
+        return result.StationResult(result_type, station_index, station_result)
 
-    def get_max_result(self, result_type : RESULT_TYPES) -> MaxResult:
+    def get_max_result(self, result_type : results_enums.RESULT_TYPES) -> result.MaxResult:
         """Retrieves result maximum value and corresponding station.
 
         :param result_type: result type StrEnum.
@@ -160,10 +172,12 @@ class Member():
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         station_index = int()
-        max_result, station_index = self.compos_api.MaxResult(self.name, str(result_type), station_index)
-        return MaxResult(result_type, station_index, max_result)
+        max_result, station_index = self.compos_api.MaxResult(self.name,
+                                                              str(result_type),
+                                                              station_index)
+        return result.MaxResult(result_type, station_index, max_result)
 
-    def get_min_result(self, result_type : RESULT_TYPES) -> MinResult:
+    def get_min_result(self, result_type : results_enums.RESULT_TYPES) -> result.MinResult:
         """Retrieves result minimum value and corresponding station.
 
         :param result_type: result type StrEnum.
@@ -175,8 +189,10 @@ class Member():
         if not self._results_available:
             raise ComposyError("Member has no results available.")
         station_index = int()
-        min_result, station_index = self.compos_api.MinResult(self.name, str(result_type), station_index)
-        return MinResult(result_type, station_index, min_result)
+        min_result, station_index = self.compos_api.MinResult(self.name,
+                                                              str(result_type),
+                                                              station_index)
+        return result.MinResult(result_type, station_index, min_result)
 
 
     def _get_member_name(self):
@@ -189,8 +205,8 @@ class Member():
         code_status_int = self.compos_api.CodeSatisfied(self.name)
         if code_status_int == 3:
             raise ComposError(code_status_int, f"Member {self.name} does not exist.")
-        self._code_status = eCodeStatus(code_status_int)
-        if self._code_status == eCodeStatus.NO_RESULT:
+        self._code_status = results_enums.eCodeStatus(code_status_int)
+        if self._code_status == results_enums.eCodeStatus.NO_RESULT:
             self._results_available = False
         else:
             self._results_available = True
@@ -211,4 +227,6 @@ class Member():
             self._stations = []
             return
         for station_index in range(0, self.num_stations):
-            self._stations.append(self.compos_api.Result(self.name, str(eResultStations.SECTION_DIST), station_index))
+            self._stations.append(self.compos_api.Result(self.name,
+                                                         str(results_enums.eResultStations.SECTION_DIST),
+                                                         station_index))

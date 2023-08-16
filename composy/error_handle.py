@@ -1,5 +1,7 @@
-# Composy - Compos API python wrapper
-# Error handler - for Compos API exceptions
+"""
+Composy - Compos API python wrapper
+Module for error handling of Composy and Compos API errors
+"""
 __all__ = ['ComposError', 'ComposyError', 'ErrorCodes']
 
 
@@ -20,10 +22,11 @@ class ComposyError(Error):
 
 
 class ErrorCodes():
+    """Class hosting method specific Compos API error codes."""
     SAVE = {1: "No Compos file open.",
             2: "No default path is available, use save_as().",
             3: "Failed to save Compos file."}
-    
+
     SAVE_AS = {1: "No Compos file open.",
                2: "Invalid Compos file extension.",
                3: "Failed to save Compos file."}

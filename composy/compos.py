@@ -1,24 +1,31 @@
-# Comosy - Compos API python wrapper
-# Compos Automation object
+"""
+Composy - Compos API python wrapper
+Main interface module to the Compos Automation object
+"""
 __all__ = ['ComposApp']
 
 from pathlib import Path
 
 # import Composy components
-from composy.compos_api import *
-from composy.error_handle import *
-from composy.member import *
-from composy.result_enums import *
+from composy.compos_api import compos
+from composy.error_handle import ComposError, ComposyError, ErrorCodes
+from composy.member import Member
+import composy.result_enums as result_enums
 
 
 class ComposApp():
     """Compos 8.6 COM Automation Interface"""
-    eUtilisationFactor = eUtilisationFactor
-    eResultStations = eResultStations
-    eResultProperties = eResultProperties
-    eResultActions = eResultActions
-    eResultCapacity = eResultCapacity
-    eResultNeutralAxis = eResultNeutralAxis
+    eUtilisationFactor = result_enums.eUtilisationFactor
+    eResultStations = result_enums.eResultStations
+    eResultProperties = result_enums.eResultProperties
+    eResultActions = result_enums.eResultActions
+    eResultCapacity = result_enums.eResultCapacity
+    eResultNeutralAxis = result_enums.eResultNeutralAxis
+    eResultDeflection = result_enums.eResultDeflection
+    eResultDeflection = result_enums.eResultStress
+    eResultStrain = result_enums.eResultStrain
+    eResultVibration = result_enums.eResultVibration
+    eResultStuds = result_enums.eResultStuds
     
     def __init__(self):
         self._compos_api = compos.Automation()
@@ -39,11 +46,11 @@ class ComposApp():
     @property
     def num_members(self):
         return self._num_members
-    
+
     @property
     def members_names(self):
         return self._member_names
-    
+
     @property
     def members(self):
         return self._members
@@ -60,9 +67,9 @@ class ComposApp():
         file_path = Path(file_path)
         if not file_path.exists:
             raise ComposyError(f"File does not exist: {str(file_path)}")
-        iErr = self._compos_api.Open(str(file_path))
-        if iErr != 0:
-            raise ComposError(iErr, f"Failed to open Compos file: {str(file_path)}.")
+        ret = self._compos_api.Open(str(file_path))
+        if ret != 0:
+            raise ComposError(ret, f"Failed to open Compos file: {str(file_path)}.")
         else:
             self._file_open = True
             self._file_path = file_path
@@ -73,20 +80,21 @@ class ComposApp():
 
         :raises ComposError: Failed to create new Compos file.
         """
-        iErr : int = self._compos_api.New()
-        if iErr != 0:
-            raise ComposError(iErr, "Failed to create new Compos file.")
+        ret : int = self._compos_api.New()
+        if ret != 0:
+            raise ComposError(ret, "Failed to create new Compos file.")
         else:
             self._file_open = True
 
     def save(self) -> None:
-        """Save the data to the default file (i.e. overwriting the file that was opened or last saved).
+        """Save the data to the default file
+        (i.e. overwriting the file that was opened or last saved).
 
         :raises ComposError: ErrorCodes.SAVE
         """
-        iErr : int = self._compos_api.Save()
-        if iErr != 0:
-            raise ComposError(iErr, ErrorCodes.SAVE[iErr])
+        ret : int = self._compos_api.Save()
+        if ret != 0:
+            raise ComposError(ret, ErrorCodes.SAVE[ret])
 
     def save_as(self, file_path: str | Path) -> None:
         """Save the data to COB, COAor CSV file.
@@ -96,9 +104,9 @@ class ComposApp():
         :raises ComposError: ErrorCodes.SAVE_AS
         """
         file_path = Path(file_path)
-        iErr : int = self._compos_api.SaveAs(file_path)
-        if iErr != 0:
-            raise ComposError(iErr, ErrorCodes.SAVE_AS[iErr])
+        ret : int = self._compos_api.SaveAs(file_path)
+        if ret != 0:
+            raise ComposError(ret, ErrorCodes.SAVE_AS[ret])
         self._file_path = file_path
 
     def close(self) -> None:
@@ -106,9 +114,9 @@ class ComposApp():
 
         :raises ComposError: No Compos file open.
         """
-        iErr : int = self._compos_api.Close()
-        if iErr != 0:
-            raise ComposError(iErr, "No Compos file open.")
+        ret : int = self._compos_api.Close()
+        if ret != 0:
+            raise ComposError(ret, "No Compos file open.")
 
     def refresh_members(self) -> None:
         """Reload all members within open Compos file.
@@ -120,7 +128,7 @@ class ComposApp():
             self._get_member_names()
             self._get_members()
         else:
-            raise ComposyError(f"No Compos file open.")
+            raise ComposyError("No Compos file open.")
 
     def analyse_all_members(self) -> None:
         for member in self._members:

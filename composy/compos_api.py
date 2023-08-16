@@ -1,12 +1,13 @@
-# Comosy - Compos API python wrapper
-# Compos Automation object interface
+"""
+Composy - Compos API python wrapper
+Module loading Compos API (.dll)
+"""
 __all__ = ['compos']
 
 # general library imports
 import sys
 import os
 import clr
-from pathlib import Path
 
 # pythonnet clr-loader import of Marshal
 clr.AddReference("System.Runtime.InteropServices")
