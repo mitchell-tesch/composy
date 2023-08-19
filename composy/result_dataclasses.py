@@ -11,7 +11,7 @@ __all__ = ['UtilisationFactors',
 from dataclasses import dataclass
 
 # import Composy components
-from composy.result_enums import RESULT_TYPES
+import composy.result_enums as results_enums
 
 
 @dataclass
@@ -31,30 +31,44 @@ class UtilisationFactors:
 @dataclass
 class StationResults:
     """Results data class for results at all member stations."""
-    result_type: RESULT_TYPES
-    results: list[float]
+    result_type:  results_enums.RESULT_TYPES
+    result_values: list[float]
 
 
 @dataclass
 class StationResult:
     """Results data class for result at specified station."""
-    result_type: RESULT_TYPES
+    result_type:  results_enums.RESULT_TYPES
     station_index: int
-    result: float
+    result_value: float
 
 
 @dataclass
 class MaxResult:
     """Results data class for result maximum and corresponding station."""
-    result_type: RESULT_TYPES
+    result_type:  results_enums.RESULT_TYPES
     station_index: int
-    result: float
+    result_value: float
 
 
 @dataclass
 class MinResult:
     """Results data class for result minimum and corresponding station."""
-    result_type: RESULT_TYPES
+    result_type:  results_enums.RESULT_TYPES
     station_index: int
-    result: float
-    
+    result_value: float
+
+
+@dataclass
+class TransRebarProperties:
+    """Results data class for properties of all transverse rebars."""
+    property_type:  results_enums.TransRebarProp
+    property_values: list[float]
+
+
+@dataclass
+class TransRebarProperty:
+    """Results data class for property of specified transverse rebar."""
+    property_type:  results_enums.TransRebarProp
+    rebar_index: int
+    property_value: float
