@@ -1,1 +1,3 @@
 pythonnet
+pytest
+coverage

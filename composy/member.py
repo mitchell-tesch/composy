@@ -5,7 +5,7 @@ Module for the Compos Member object
 __all__ = ['Member']
 
 # import Composy components
-from composy.compos_api import compos
+from composy.compos_api import compos_api
 from composy.error_handle import ComposyError, ComposError
 import composy.result_enums as results_enums
 import composy.result_dataclasses as result
@@ -14,9 +14,9 @@ import composy.result_dataclasses as result
 class Member():
     """Compos 8.6 Member"""
 
-    def __init__(self, compos_api: compos.Automation = None, index: int = None):
+    def __init__(self, compos_auto: compos_api.Automation = None, index: int = None):
         # existing member will have an index
-        self._compos_api: compos.Automation = compos_api
+        self._compos_auto: compos_auto.Automation = compos_auto
         self._index: int = index
         self._name: str = self._get_member_name()
         self._section_desc: str = self._get_section_desc()
@@ -83,9 +83,9 @@ class Member():
 
 
     @classmethod
-    def from_index(cls, compos_api, member_index):
+    def from_index(cls, compos_auto: compos_api.Automation, member_index: int):
         """Create Composy member from Compos index."""
-        return cls(compos_api, member_index)
+        return cls(compos_auto, member_index)
 
 
     # Public methods
@@ -94,7 +94,7 @@ class Member():
 
         :raises ComposError: Analysis of member {} failed.
         """
-        ret: int = self._compos_api.Analyse(self._name)
+        ret: int = self._compos_auto.Analyse(self._name)
         if ret != 0:
             raise ComposError(ret, f"Analysis of member {self._name} failed.")
         else:
@@ -110,7 +110,7 @@ class Member():
 
         :raises ComposError: Design of member {} failed.
         """
-        ret: int = self._compos_api.Design(self._name)
+        ret: int = self._compos_auto.Design(self._name)
         if ret != 0:
             raise ComposError(ret, f"Design of member {self._name} failed.")
         else:
@@ -141,7 +141,7 @@ class Member():
                        results_enums.UtilisationFactor.TRANS_SHEAR,
                        results_enums.UtilisationFactor.WEB_OPEN,
                        results_enums.UtilisationFactor.NATURAL_FREQ]:
-            utilisation_factors.append(self._compos_api.UtilisationFactor(self._name, str(factor)))
+            utilisation_factors.append(self._compos_auto.UtilisationFactor(self._name, str(factor)))
         return result.UtilisationFactors(*utilisation_factors)
 
     def get_station_results(self,
@@ -158,9 +158,9 @@ class Member():
             raise ComposyError("Member has no results available.")
         station_results: list[float] = []
         for station_index in range(0, self._num_stations):
-            station_results.append(self._compos_api.Result(self._name,
-                                                          str(result_type),
-                                                          station_index))
+            station_results.append(self._compos_auto.Result(self._name,
+                                                            str(result_type),
+                                                            station_index))
         return result.StationResults(result_type, station_results)
 
     def get_station_result(self,
@@ -178,7 +178,7 @@ class Member():
         """
         if not self._results_available:
             raise ComposyError("Member has no results available.")
-        station_result: float = self._compos_api.Result(self._name, str(result_type), station_index)
+        station_result: float = self._compos_auto.Result(self._name, str(result_type), station_index)
         return result.StationResult(result_type, station_index, station_result)
 
     def get_max_result(self, result_type: results_enums.RESULT_TYPES) -> result.MaxResult:
@@ -194,9 +194,9 @@ class Member():
             raise ComposyError("Member has no results available.")
         station_index: int = int()
         max_result: float = float()
-        max_result, station_index = self._compos_api.MaxResult(self._name,
-                                                              str(result_type),
-                                                              station_index)
+        max_result, station_index = self._compos_auto.MaxResult(self._name,
+                                                                str(result_type),
+                                                                station_index)
         return result.MaxResult(result_type, station_index, max_result)
 
     def get_min_result(self, result_type: results_enums.RESULT_TYPES) -> result.MinResult:
@@ -212,9 +212,9 @@ class Member():
             raise ComposyError("Member has no results available.")
         station_index: int = int()
         min_result: float = float()
-        min_result, station_index = self._compos_api.MinResult(self._name,
-                                                              str(result_type),
-                                                              station_index)
+        min_result, station_index = self._compos_auto.MinResult(self._name,
+                                                                str(result_type),
+                                                                station_index)
         return result.MinResult(result_type, station_index, min_result)
 
     def get_trans_rebar_properties(self,
@@ -231,9 +231,9 @@ class Member():
             raise ComposyError("Member has no results available.")
         property_values: list[float] = []
         for rebar_index in range(0, self._num_trans_rebar):
-            property_values.append(self._compos_api.TranRebarProp(self._name,
-                                                                  str(property_type),
-                                                                  rebar_index))
+            property_values.append(self._compos_auto.TranRebarProp(self._name,
+                                                                   str(property_type),
+                                                                   rebar_index))
         return result.TransRebarProperties(property_type, property_values)
 
     def get_trans_rebar_property(self,
@@ -251,21 +251,21 @@ class Member():
         """
         if not self._results_available:
             raise ComposyError("Member has no results available.")
-        property_value: float = self._compos_api.TranRebarProp(self._name,
-                                                               str(property_type),
-                                                               rebar_index)
+        property_value: float = self._compos_auto.TranRebarProp(self._name,
+                                                                str(property_type),
+                                                                rebar_index)
         return result.TransRebarProperty(property_type, rebar_index, property_value)
 
 
     # Private methods
     def _get_member_name(self) -> str:
-        return self._compos_api.MemberName(self._index)
+        return self._compos_auto.MemberName(self._index)
 
     def _get_section_desc(self) -> str:
-        return self._compos_api.BeamSectDesc(self._name)
+        return self._compos_auto.BeamSectDesc(self._name)
 
     def _get_code_status(self):
-        code_status_int: int = self._compos_api.CodeSatisfied(self._name)
+        code_status_int: int = self._compos_auto.CodeSatisfied(self._name)
         if code_status_int == 3:
             raise ComposError(code_status_int, f"Member {self._name} does not exist.")
         self._code_status = results_enums.CodeStatus(code_status_int)
@@ -275,7 +275,7 @@ class Member():
             self._results_available = True
 
     def _get_number_stations(self):
-        num_stations: int = self._compos_api.NumIntermediatePos(self._name)
+        num_stations: int = self._compos_auto.NumIntermediatePos(self._name)
         if num_stations == -1:
             raise ComposError(num_stations, f"Member {self._name} does not exist.")
         elif num_stations == 0:
@@ -290,12 +290,12 @@ class Member():
             self._stations = []
             return
         for station_index in range(0, self._num_stations):
-            self._stations.append(self._compos_api.Result(self._name,
-                                                         str(results_enums.ResultStations.SECTION_DIST),
-                                                         station_index))
+            self._stations.append(self._compos_auto.Result(self._name,
+                                                           str(results_enums.ResultStations.SECTION_DIST),
+                                                           station_index))
 
     def _get_number_trans_rebar(self):
-        num_trans_rebar = self._compos_api.NumTranRebar(self._name)
+        num_trans_rebar = self._compos_auto.NumTranRebar(self._name)
         if num_trans_rebar == -1:
             raise ComposError(num_trans_rebar, f"Member {self._name} does not exist.")
         else:

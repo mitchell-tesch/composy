@@ -7,7 +7,7 @@ __all__ = ['ComposApp']
 from pathlib import Path
 
 # import Composy components
-from composy.compos_api import compos
+from composy.compos_api import compos_api
 from composy.error_handle import ComposError, ComposyError, ErrorCodes
 from composy.member import Member
 import composy.result_enums as result_enums
@@ -29,7 +29,7 @@ class ComposApp():
     TransRebarProp = result_enums.TransRebarProp
 
     def __init__(self):
-        self._compos_api = compos.Automation()
+        self._compos_auto = compos_api.Automation()
         self._file_open: bool = False
         self._file_path: Path = Path("")
         self._num_members: int = int()
@@ -52,7 +52,7 @@ class ComposApp():
         return self._num_members
 
     @property
-    def members_names(self):
+    def member_names(self):
         """Name of members in Compos file."""
         return self._member_names
 
@@ -74,7 +74,7 @@ class ComposApp():
         file_path = Path(file_path)
         if not file_path.exists:
             raise ComposyError(f"File does not exist: {str(file_path)}")
-        ret: int = self._compos_api.Open(str(file_path))
+        ret: int = self._compos_auto.Open(str(file_path))
         if ret != 0:
             raise ComposError(ret, f"Failed to open Compos file: {str(file_path)}.")
         else:
@@ -87,7 +87,7 @@ class ComposApp():
 
         :raises ComposError: Failed to create new Compos file.
         """
-        ret: int = self._compos_api.New()
+        ret: int = self._compos_auto.New()
         if ret != 0:
             raise ComposError(ret, "Failed to create new Compos file.")
         else:
@@ -99,7 +99,7 @@ class ComposApp():
 
         :raises ComposError: ErrorCodes.SAVE
         """
-        ret: int = self._compos_api.Save()
+        ret: int = self._compos_auto.Save()
         if ret != 0:
             raise ComposError(ret, ErrorCodes.SAVE[ret])
 
@@ -111,7 +111,7 @@ class ComposApp():
         :raises ComposError: ErrorCodes.SAVE_AS
         """
         file_path = Path(file_path)
-        ret: int = self._compos_api.SaveAs(file_path)
+        ret: int = self._compos_auto.SaveAs(file_path)
         if ret != 0:
             raise ComposError(ret, ErrorCodes.SAVE_AS[ret])
         self._file_path = file_path
@@ -121,9 +121,12 @@ class ComposApp():
 
         :raises ComposError: No Compos file open.
         """
-        ret: int = self._compos_api.Close()
+        ret: int = self._compos_auto.Close()
         if ret != 0:
             raise ComposError(ret, "No Compos file open.")
+        self._file_open = False
+        self._file_path = Path("")
+        self._clear_members()
 
     def refresh_members(self):
         """Reload all members within open Compos file.
@@ -150,16 +153,21 @@ class ComposApp():
 
     # Private methods
     def _get_num_members(self):
-        self._num_members = self._compos_api.NumMember()
+        self._num_members = self._compos_auto.NumMember()
 
     def _get_member_names(self):
         if not self._num_members:
             raise ComposyError("No members present in Compos file.")
         for member_index in range(0, self._num_members):
-            self._member_names.append(self._compos_api.MemberName(member_index))
+            self._member_names.append(self._compos_auto.MemberName(member_index))
 
     def _get_members(self):
         if not self._num_members:
             raise ComposyError("No members present in Compos file.")
         for member_index in range(0, self._num_members):
-            self._members.append(Member.from_index(self._compos_api, member_index))
+            self._members.append(Member.from_index(self._compos_auto, member_index))
+            
+    def _clear_members(self):
+        self._num_members = int()
+        self._member_names = []
+        self._members = []
