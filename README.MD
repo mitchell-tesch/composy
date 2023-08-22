@@ -37,7 +37,7 @@ $ pip install py
 ### Usage
 🗒️Documentation is a work in progress.
 
-For examples, please refer to the included [tests](./examples/).
+For usage examples, please refer to the included [tests](./tests/test_basic.py).
 
 
 ### Licence
