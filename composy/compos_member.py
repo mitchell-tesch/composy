@@ -2,7 +2,7 @@
 Composy - Compos API python wrapper
 Module for the Compos Member object
 """
-__all__ = ['Member']
+__all__ = ['ComposMember']
 
 # import Composy components
 from composy.compos_api import compos_api
@@ -11,7 +11,7 @@ import composy.result_enums as results_enums
 import composy.result_dataclasses as result
 
 
-class Member():
+class ComposMember():
     """Compos 8.6 Member"""
 
     def __init__(self, compos_auto: compos_api.Automation = None, index: int = None):

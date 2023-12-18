@@ -1,12 +1,12 @@
 """
 Composy - Compos API python wrapper
-Basic Tests
+Basic Tests of Compos App
 Using Compos Sample file - refer compos_sample.py
 """
 from pathlib import Path
 import pytest
 import composy
-import composy.member # imported for testing only
+import composy.compos_member # imported for testing only
 import composy.result_dataclasses as result_dc # imported for testing only
 import tests.compos_sample as compos_sample
 
@@ -42,7 +42,7 @@ def test_member_population():
     member_sections = []
     for member in compos.members:
         # check instance of member
-        assert isinstance(member, composy.member.Member)
+        assert isinstance(member, composy.compos_member.ComposMember)
         member_names.append(member.name)
         member_sections.append(member.section_desc)
     # check qty and name of member objects

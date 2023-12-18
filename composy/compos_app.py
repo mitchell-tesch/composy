@@ -9,7 +9,7 @@ from pathlib import Path
 # import Composy components
 from composy.compos_api import compos_api
 from composy.error_handle import ComposError, ComposyError, ErrorCodes
-from composy.member import Member
+from composy.compos_member import ComposMember
 import composy.result_enums as result_enums
 
 
@@ -34,7 +34,7 @@ class ComposApp():
         self._file_path: Path = Path("")
         self._num_members: int = int()
         self._member_names: list[str] = []
-        self._members: list[Member] = []
+        self._members: list[ComposMember] = []
 
     @property
     def file_open(self):
@@ -165,7 +165,7 @@ class ComposApp():
         if not self._num_members:
             raise ComposyError("No members present in Compos file.")
         for member_index in range(0, self._num_members):
-            self._members.append(Member.from_index(self._compos_auto, member_index))
+            self._members.append(ComposMember.from_index(self._compos_auto, member_index))
             
     def _clear_members(self):
         self._num_members = int()
