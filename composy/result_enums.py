@@ -143,13 +143,13 @@ class ResultActions(StrEnum):
 
 class ResultCapacity(StrEnum):
     """Enumeration for Compos beam result types relating to capacity."""
-    CAPACITY_CONS_HOG_MOMENT = "CAPA_MOM_ULTI_CONS_HOG"
+    CAPACITY_CONST_HOG_MOMENT = "CAPA_MOM_ULTI_CONS_HOG"
     """Hogging moment capacity in Construction stage"""
-    CAPACITY_CONS_PLAST_HOG_MOMENT = "CAPA_MOM_BEAM_PLAS_HOG"
+    CAPACITY_CONST_PLAST_HOG_MOMENT = "CAPA_MOM_BEAM_PLAS_HOG"
     """Assumed plastic Hogging moment capacity in Construction stage"""
-    CAPACITY_CONS_SAG_MOMENT = "CAPA_MOM_ULTI_CONS_SAG"
+    CAPACITY_CONST_SAG_MOMENT = "CAPA_MOM_ULTI_CONS_SAG"
     """Sagging moment capacity in Construction stage"""
-    CAPACITY_CONS_PLAST_SAG_MOMENT = "CAPA_MOM_BEAM_PLAS_SAG"
+    CAPACITY_CONST_PLAST_SAG_MOMENT = "CAPA_MOM_BEAM_PLAS_SAG"
     """Assumed plastic Sagging moment capacity in Construction stage"""
 
     CAPACITY_FINAL_HOG_MOMENT = "CAPA_MOM_ULTI_FINA_HOG"

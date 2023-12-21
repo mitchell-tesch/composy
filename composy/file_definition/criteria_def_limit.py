@@ -1,12 +1,12 @@
 """
 Composy - Compos API python wrapper
-Compos file definition - Criteria Def limit
+Compos file definition - Criteria Def Limit
 """
 __all__ = ['CriteriaDefLimit']
 
 from enum import StrEnum
 
-# Design code and Construction type enumerations
+# Deflection Scenario and Deflection Limit type enumerations
 class DefScenario(StrEnum):
     CONST_DEAD_LOAD = 'CONSTRUCTION_DEAD_LOAD'
     ADD_DEAD_LOAD = 'ADDITIONAL_DEAD_LOAD'
