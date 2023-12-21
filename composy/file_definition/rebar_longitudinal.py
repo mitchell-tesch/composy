@@ -50,12 +50,12 @@ class RebarLongitudinal():
 
     def __repr__(self) -> str:
         if self.is_user_defined:
-            return f"RREBAR_LONGITUDINAL({self.type},{self.start},{self.end},{self.diameter},\
+            return f"REBAR_LONGITUDINAL({self.type},{self.start},{self.end},{self.diameter},\
                 {self.spacing},{self.cover},{self.grade})"
-        return f"RREBAR_LONGITUDINAL({self.type})"
+        return f"REBAR_LONGITUDINAL({self.type})"
 
     def __str__(self) -> str:
         if self.is_user_defined:
-            return f"RREBAR_LONGITUDINAL,{self.member_name},{self.type},{self.start},{self.end},{self.diameter},\
+            return f"REBAR_LONGITUDINAL,{self.member_name},{self.type},{self.start},{self.end},{self.diameter},\
                 {self.spacing},{self.cover},{self.grade}"
-        return f"RREBAR_LONGITUDINAL,{self.member_name},{self.type}"
+        return f"REBAR_LONGITUDINAL,{self.member_name},{self.type}"
