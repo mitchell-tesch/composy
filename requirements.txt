@@ -1,3 +1,0 @@
-pythonnet
-pytest
-coverage

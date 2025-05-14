@@ -4,7 +4,7 @@
     <!-- <img src="images/logo.png" alt="PyTABS logo" width="80" height="80"> -->
   </a>
 
-  <h3 align="center">ComPosY</h3>
+  <h3 align="center">Composy</h3>
 
   <p align="center">
     Python interface to the Oasys Compos 8.6 API
@@ -27,11 +27,6 @@ Package yet to be uploaded to the Python Package Index. In the meantime copy the
 <!-- ```
 $ pip install py
 ``` -->
-
-
-#### Requirements
- - Python 3.11
- - pythonnet
 
 
 ### Usage

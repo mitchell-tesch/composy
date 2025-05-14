@@ -1,0 +1,38 @@
+[project]
+name = "composy"
+version = "0.1.0-alpha"
+description = "A simple yet robust Python interface to Oasys Compos 8.6"
+readme = "README.md"
+authors = [
+    { name = "Mitchell tesch", email = "mitchell.z.tesch@gmail.com" }
+]
+keywords = [
+    "structural-engineering",
+    "computational-engineering",
+    "computational-design",
+]
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "pythonnet>=3.0.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/mitchell-tesch/composy"
+Documentation = ""
+Repository = "https://github.com/mitchell-tesch/composy"
+Issues = "https://github.com/mitchell-tesch/composy/issues"
+Changelog = "https://github.com/mitchell-tesch/composy/releases"
+
+[dependency-groups]
+dev = [
+    "coverage>=7.8.0",
+    "pytest>=8.3.5",
+    "ruff>=0.11.9",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

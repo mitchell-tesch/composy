@@ -11,7 +11,6 @@ import composy.result_dataclasses as result_dc # imported for testing only
 import tests.compos_sample as compos_sample
 
 
-
 def test_compos_open_close():
     """Test Compos application open and close."""
     # create composy Compos app
