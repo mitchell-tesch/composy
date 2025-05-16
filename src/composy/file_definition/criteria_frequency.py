@@ -30,8 +30,8 @@ class CriteriaFrequency:
             self.min_frequency = ''
 
     def __repr__(self) -> str:
-        return f'CRITERIA_DEF_LIMIT({self.check_status},{self.dead_load_percent},{self.live_load_percent})'
+        return f'CRITERIA_FREQUENCY({self.check_status},{self.dead_load_percent},{self.live_load_percent})'
 
     def __str__(self) -> str:
-        return f'CRITERIA_DEF_LIMIT,{self.member_name},{self.check_status},\
+        return f'CRITERIA_FREQUENCY,{self.member_name},{self.check_status},\
             {self.dead_load_percent},{self.live_load_percent}'

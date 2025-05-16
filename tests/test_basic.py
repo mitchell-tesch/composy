@@ -3,11 +3,12 @@ Composy - Compos API python wrapper
 Basic Tests of Compos App
 Using Compos Sample file - refer compos_sample.py
 """
+
 from pathlib import Path
 import pytest
 import composy
-import composy.compos_member # imported for testing only
-import composy.result_dataclasses as result_dc # imported for testing only
+import composy.compos_member  # imported for testing only
+import composy.result_dataclasses as result_dc  # imported for testing only
 import tests.compos_sample as compos_sample
 
 
@@ -22,7 +23,7 @@ def test_compos_open_close():
     # close file testing
     compos.close()
     assert compos.file_open is False
-    assert compos.file_path == Path("")
+    assert compos.file_path == Path('')
 
 
 def test_member_population():
@@ -124,9 +125,8 @@ def test_member_station_results():
     # check ULS final moment
     result_type = compos.ResultActions.ULS_FINAL_MOMENT
     station_moments = test_member.get_station_results(result_type)
-    assert station_moments.result_type == str(result_type )
-    assert station_moments.result_values == pytest.approx(compos_sample.MEMBER_ULS_FINAL_MOMENT,
-                                                          abs=1)
+    assert station_moments.result_type == str(result_type)
+    assert station_moments.result_values == pytest.approx(compos_sample.MEMBER_ULS_FINAL_MOMENT, abs=1)
     # close file
     compos.close()
 
@@ -146,8 +146,7 @@ def test_member_station_result():
         station_moment = test_member.get_station_result(result_type, station_index)
         assert station_moment.result_type == str(result_type)
         assert station_moment.station_index == station_index
-        assert station_moment.result_value == pytest.approx(compos_sample.MEMBER_ULS_FINAL_MOMENT[station_index],
-                                                            abs=1)
+        assert station_moment.result_value == pytest.approx(compos_sample.MEMBER_ULS_FINAL_MOMENT[station_index], abs=1)
     # close file
     compos.close()
 

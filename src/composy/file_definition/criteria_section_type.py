@@ -13,17 +13,18 @@ class SectionType(StrEnum):
     EURO_IPE = '26'
     BRITISH_UB = '70'
     BRITISH_UC = '71'
+    AUS_UB = '242'
 
     # TODO - library indexing...
 
 
 class CriteriaSectionType:
-    def __init__(self, member_name, section_type: SectionType):
+    def __init__(self, member_name, section_types: list[SectionType]):
         self.member_name = member_name
-        self.section_type = section_type
+        self.section_types = section_types
 
     def __repr__(self) -> str:
-        return f'CRITERIA_SECTION_TYPE({self.section_type})'
+        return f'CRITERIA_SECTION_TYPE({",".join(self.section_types)})'
 
     def __str__(self) -> str:
-        return f'CRITERIA_SECTION_TYPE,{self.member_name},{self.section_type}'
+        return f'CRITERIA_SECTION_TYPE,{self.member_name},{",".join(self.section_types)}'

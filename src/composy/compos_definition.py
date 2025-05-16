@@ -26,7 +26,7 @@ class ComposDefinition:
         calc_header: str,
         job_number: str,
         initials: str,
-        file_version: int,
+        file_version: int = 1,
         force_unit: ForceUnit = ForceUnit.kN,
         length_unit: LengthUnit = LengthUnit.m,
         disp_unit: LengthUnit = LengthUnit.m,
@@ -35,11 +35,8 @@ class ComposDefinition:
         mass_unit: MassUnit = MassUnit.kg,
     ):
         self._version = version.ComposFileVersion(file_version)
-
         self._title = title.Title(job_title, sub_title, calc_header, job_number, initials)
-
         self._unit_data = unit_data.UnitData(force_unit, length_unit, disp_unit, section_unit, stress_unit, mass_unit)
-
         self.member_definitions: list[MemberDefinition] = []
         self.member_groups: list[Group] = []
 

@@ -13,7 +13,7 @@ class BeamSpanLength:
         self.span_length = span_length
 
     def __repr__(self) -> str:
-        return f'BEAM_STEEL_MATERIAL_USER({self.span_number},{self.span_length})'
+        return f'BEAM_SPAN_LENGTH({self.span_number},{self.span_length})'
 
     def __str__(self) -> str:
-        return f'BEAM_STEEL_MATERIAL_USER,{self.member_name},{self.span_number},{self.span_length}'
+        return f'BEAM_SPAN_LENGTH,{self.member_name},{self.span_number},{self.span_length}'

@@ -24,4 +24,4 @@ class BeamWeldingMaterial:
         return f'BEAM_WELDING_MATERIAL({self.material_grade})'
 
     def __str__(self) -> str:
-        return f'BEAM_STEEL_MATERIAL_STD,{self.member_name},{self.material_grade}'
+        return f'BEAM_WELDING_MATERIAL,{self.member_name},{self.material_grade}'

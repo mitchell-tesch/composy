@@ -31,9 +31,9 @@ class BeamSectionAtX:
             self.is_tapered = self._tapered[is_tapered]
 
     def __repr__(self) -> str:
-        return f'BEAM_STEEL_MATERIAL_STD({self.number_sections},{self.index_of_section},\
+        return f'BEAM_SECTION_AT_X({self.number_sections},{self.index_of_section},\
             {self.distance_left},{self.is_tapered})'
 
     def __str__(self) -> str:
-        return f'BEAM_STEEL_MATERIAL_STD,{self.member_name},{self.number_sections},{self.index_of_section},\
+        return f'BEAM_SECTION_AT_X,{self.member_name},{self.number_sections},{self.index_of_section},\
             {self.distance_left},{self.is_tapered}'

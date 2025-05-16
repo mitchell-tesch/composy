@@ -34,12 +34,10 @@ class EcLoadCombFactors:
 
     def __repr__(self) -> str:
         if self.load_comb == EcLoadComb.USER_DEFINED:
-            return (
-                f'EC4_DESIGN_OPTION({self.load_comb},{self.xi_const},{self.xi_final},{self.psi_const},{self.psi_final})'
-            )
-        return f'EC4_DESIGN_OPTION({self.member_name},{self.load_comb})'
+            return f'EC4_LOAD_COMB_FACTORS({self.load_comb},{self.xi_const},{self.xi_final},{self.psi_const},{self.psi_final})'
+        return f'EC4_LOAD_COMB_FACTORS({self.member_name},{self.load_comb})'
 
     def __str__(self) -> str:
         if self.load_comb == EcLoadComb.USER_DEFINED:
-            return f'EC4_DESIGN_OPTION,{self.member_name},{self.load_comb},{self.xi_const},{self.xi_final},{self.psi_const},{self.psi_final}'
-        return f'EC4_DESIGN_OPTION,{self.member_name},{self.load_comb}'
+            return f'EC4_LOAD_COMB_FACTORS,{self.member_name},{self.load_comb},{self.xi_const},{self.xi_final},{self.psi_const},{self.psi_final}'
+        return f'EC4_LOAD_COMB_FACTORS,{self.member_name},{self.load_comb}'

@@ -17,6 +17,9 @@ class StdSteelGrade(StrEnum):
     S275_EN = 'S275_EN'
     S355_EN = 'S355_EN'
     S460_EN = 'S460_EN'
+    AS_300 = '300(AS3678)'
+    AS_350 = '350(AS3678)'
+    AS_400 = '400(AS3678)'
 
 
 class BeamSteelMaterialStd:

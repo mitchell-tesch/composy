@@ -24,7 +24,7 @@ class ComposApp:
     ResultCapacity = result_enums.ResultCapacity
     ResultNeutralAxis = result_enums.ResultNeutralAxis
     ResultDeflection = result_enums.ResultDeflection
-    ResultDeflection = result_enums.ResultStress
+    ResultStress = result_enums.ResultStress
     ResultStrain = result_enums.ResultStrain
     ResultVibration = result_enums.ResultVibration
     ResultStuds = result_enums.ResultStuds

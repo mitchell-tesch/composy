@@ -7,7 +7,7 @@ __all__ = ['Group']
 
 
 class Group:
-    def __init__(self, name: str, note: str, members: [str]):
+    def __init__(self, name: str, note: str, members: list[str]):
         self.name = name
         self.note = note
         self.num_members = len(members)

@@ -30,10 +30,10 @@ class SafetyFactorMaterial:
         self.reinforcement = reinforcement
 
     def __repr__(self) -> str:
-        return f'SAFETY_FACTOR_LOAD({self.steel_yield},{self.steel_buckling},{self.steel_ultimate},\
+        return f'SAFETY_FACTOR_MATERIAL({self.steel_yield},{self.steel_buckling},{self.steel_ultimate},\
             {self.conc_comp},{self.conc_shear},{self.decking},{self.stud},{self.reinforcement})'
 
     def __str__(self) -> str:
-        return f'SAFETY_FACTOR_LOAD,{self.member_name},{self.steel_yield},{self.steel_buckling},\
+        return f'SAFETY_FACTOR_MATERIAL,{self.member_name},{self.steel_yield},{self.steel_buckling},\
             {self.steel_ultimate},{self.conc_comp},{self.conc_shear},{self.decking},{self.stud},\
                 {self.reinforcement}'
